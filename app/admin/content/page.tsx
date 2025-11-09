@@ -282,17 +282,26 @@ export default function ContentManager() {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-neutral-900">Content Manager</h1>
+              <p className="text-sm text-neutral-600">Edit website content and images</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-2 mr-2">
+                <button onClick={() => router.push('/admin#bookings')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Bookings</button>
+                <button onClick={() => router.push('/admin#messages')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Messages</button>
+                <button onClick={() => router.push('/admin#products')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Products</button>
+                <button onClick={() => router.push('/admin#services')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Services</button>
+                <button onClick={() => router.push('/admin#orders')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Orders</button>
+                <button onClick={() => router.push('/admin/media')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Media</button>
+                <button disabled className="px-3 py-2 rounded-lg bg-primary text-white text-sm">Content</button>
+              </div>
               <button
                 onClick={() => router.push('/admin')}
-                className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
+                className="px-4 py-2 text-neutral-700 hover:text-neutral-900"
               >
-                <ArrowLeft size={20} />
+                Back to Dashboard
               </button>
-              <div>
-                <h1 className="text-2xl font-bold text-neutral-900">Content Manager</h1>
-                <p className="text-sm text-neutral-600">Edit website content and images</p>
-              </div>
             </div>
           </div>
         </div>
@@ -306,52 +315,130 @@ export default function ContentManager() {
             <p className="text-neutral-600">Loading content...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="space-y-6">
             {/* Hero Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">Hero Section</h2>
-              {renderField('hero', 'background_image', 'Background Image', 'image')}
-              {renderField('hero', 'title', 'Main Title', 'text')}
-              {renderField('hero', 'subtitle', 'Subtitle', 'text')}
-              {renderField('hero', 'description', 'Description', 'textarea')}
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">1.</span> Hero Section
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  {renderField('hero', 'title', 'Main Title', 'text')}
+                  {renderField('hero', 'subtitle', 'Subtitle', 'text')}
+                  {renderField('hero', 'description', 'Description', 'textarea')}
+                </div>
+                <div>
+                  {renderField('hero', 'background_image', 'Background Image', 'image')}
+                </div>
+              </div>
             </div>
 
             {/* About Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">About Section</h2>
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">2.</span> About Section
+              </h2>
               {renderField('about', 'heading', 'Section Heading', 'text')}
               {renderField('about', 'intro1', 'Introduction Paragraph 1', 'textarea')}
               {renderField('about', 'intro2', 'Introduction Paragraph 2', 'textarea')}
             </div>
 
+            {/* Brand Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">3.</span> Brand Section
+              </h2>
+              {renderField('brand', 'heading', 'Section Heading', 'text')}
+              {renderField('brand', 'description', 'Section Description', 'textarea')}
+            </div>
+
             {/* Services Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">Services Section</h2>
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">4.</span> Services Section
+              </h2>
               {renderField('services', 'heading', 'Section Heading', 'text')}
               {renderField('services', 'description', 'Section Description', 'textarea')}
+              <p className="text-sm text-neutral-500 mt-4 p-3 bg-neutral-50 rounded-lg">💡 Individual services are managed in the Services tab on the main admin dashboard</p>
+            </div>
+
+            {/* Menu Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">5.</span> Menu Section
+              </h2>
+              {renderField('menu', 'heading', 'Section Heading', 'text')}
+              {renderField('menu', 'description', 'Section Description', 'textarea')}
+            </div>
+
+            {/* Schedule Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">6.</span> Schedule Section
+              </h2>
+              {renderField('schedule', 'heading', 'Section Heading', 'text')}
+              {renderField('schedule', 'description', 'Section Description', 'textarea')}
             </div>
 
             {/* Gallery Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">Gallery Section</h2>
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">7.</span> Gallery Section
+              </h2>
               {renderField('gallery', 'heading', 'Section Heading', 'text')}
               {renderField('gallery', 'description', 'Section Description', 'textarea')}
+              <p className="text-sm text-neutral-500 mt-4 p-3 bg-neutral-50 rounded-lg">💡 Gallery images are managed in the Media Manager</p>
+            </div>
+
+            {/* Testimonials Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">8.</span> Testimonials Section
+              </h2>
+              {renderField('testimonials', 'heading', 'Section Heading', 'text')}
+              {renderField('testimonials', 'description', 'Section Description', 'textarea')}
+            </div>
+
+            {/* Shop Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">9.</span> Shop Section
+              </h2>
+              {renderField('shop', 'heading', 'Section Heading', 'text')}
+              {renderField('shop', 'description', 'Section Description', 'textarea')}
+              <p className="text-sm text-neutral-500 mt-4 p-3 bg-neutral-50 rounded-lg">💡 Products are managed in the Products tab on the main admin dashboard</p>
             </div>
 
             {/* Booking Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">Booking Section</h2>
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">10.</span> Booking Section
+              </h2>
               {renderField('booking', 'heading', 'Section Heading', 'text')}
               {renderField('booking', 'description', 'Section Description', 'textarea')}
+              <p className="text-sm text-neutral-500 mt-4 p-3 bg-neutral-50 rounded-lg">💡 Bookings are managed in the Bookings tab on the main admin dashboard</p>
+            </div>
+
+            {/* Newsletter Section */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">11.</span> Newsletter Section
+              </h2>
+              {renderField('newsletter', 'heading', 'Section Heading', 'text')}
+              {renderField('newsletter', 'description', 'Section Description', 'textarea')}
+              {renderField('newsletter', 'button_text', 'Button Text', 'text')}
             </div>
 
             {/* Contact Section */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b">Contact Section</h2>
+              <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
+                <span className="text-primary">12.</span> Contact Section
+              </h2>
               {renderField('contact', 'heading', 'Section Heading', 'text')}
               {renderField('contact', 'address', 'Address', 'text')}
               {renderField('contact', 'phone', 'Phone Number', 'text')}
               {renderField('contact', 'email', 'Email Address', 'text')}
+              <p className="text-sm text-neutral-500 mt-4 p-3 bg-neutral-50 rounded-lg">💡 Contact messages are managed in the Messages tab on the main admin dashboard</p>
             </div>
           </div>
         )}

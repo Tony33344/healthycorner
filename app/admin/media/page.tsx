@@ -237,8 +237,10 @@ export default function MediaManager() {
                 <button onClick={() => router.push('/admin#bookings')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Bookings</button>
                 <button onClick={() => router.push('/admin#messages')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Messages</button>
                 <button onClick={() => router.push('/admin#products')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Products</button>
+                <button onClick={() => router.push('/admin#services')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Services</button>
                 <button onClick={() => router.push('/admin#orders')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Orders</button>
                 <button disabled className="px-3 py-2 rounded-lg bg-primary text-white text-sm">Media</button>
+                <button onClick={() => router.push('/admin/content')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Content</button>
               </div>
               <button
                 onClick={() => router.push('/admin')}

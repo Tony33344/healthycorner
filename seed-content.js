@@ -95,6 +95,20 @@ const contentItems = [
     published: true
   },
 
+  // Brand Section
+  {
+    section: 'brand',
+    key: 'heading',
+    value: 'The Healthy Corner Way',
+    published: true
+  },
+  {
+    section: 'brand',
+    key: 'description',
+    value: 'Our philosophy combines ancient wisdom with modern wellness science',
+    published: true
+  },
+
   // Services Section
   {
     section: 'services',
@@ -106,6 +120,34 @@ const contentItems = [
     section: 'services',
     key: 'description',
     value: 'Discover our range of wellness services designed to transform your health and vitality',
+    published: true
+  },
+
+  // Menu Section
+  {
+    section: 'menu',
+    key: 'heading',
+    value: 'Healthy Menu',
+    published: true
+  },
+  {
+    section: 'menu',
+    key: 'description',
+    value: 'Nourish your body with our organic, locally-sourced meals',
+    published: true
+  },
+
+  // Schedule Section
+  {
+    section: 'schedule',
+    key: 'heading',
+    value: 'Daily Schedule',
+    published: true
+  },
+  {
+    section: 'schedule',
+    key: 'description',
+    value: 'A typical day at Healthy Corner wellness retreat',
     published: true
   },
 
@@ -123,6 +165,34 @@ const contentItems = [
     published: true
   },
 
+  // Testimonials Section
+  {
+    section: 'testimonials',
+    key: 'heading',
+    value: 'What Our Guests Say',
+    published: true
+  },
+  {
+    section: 'testimonials',
+    key: 'description',
+    value: 'Real stories from people who transformed their lives at Healthy Corner',
+    published: true
+  },
+
+  // Shop Section
+  {
+    section: 'shop',
+    key: 'heading',
+    value: 'Wellness Shop',
+    published: true
+  },
+  {
+    section: 'shop',
+    key: 'description',
+    value: 'Premium wellness products and retreat packages',
+    published: true
+  },
+
   // Booking Section
   {
     section: 'booking',
@@ -134,6 +204,26 @@ const contentItems = [
     section: 'booking',
     key: 'description',
     value: 'Reserve your spot for a transformative wellness journey',
+    published: true
+  },
+
+  // Newsletter Section
+  {
+    section: 'newsletter',
+    key: 'heading',
+    value: 'Stay Connected',
+    published: true
+  },
+  {
+    section: 'newsletter',
+    key: 'description',
+    value: 'Subscribe to our newsletter for wellness tips and exclusive offers',
+    published: true
+  },
+  {
+    section: 'newsletter',
+    key: 'button_text',
+    value: 'Subscribe',
     published: true
   },
 
