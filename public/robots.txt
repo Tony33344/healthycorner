@@ -1,0 +1,10 @@
+# robots.txt for Healthy Corner
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /order-confirmation/
+
+# Sitemap
+Sitemap: https://healthycorner.si/sitemap.xml

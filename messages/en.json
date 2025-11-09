@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "menu": "Menu",
+    "schedule": "Schedule",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "bookNow": "Book Now"
+  },
+  "hero": {
+    "title": "Experience Wellness in the Slovenian Alps",
+    "subtitle": "Transform your health through nature, yoga, and cold therapy",
+    "cta": "Start Your Journey"
+  },
+  "about": {
+    "title": "About Healthy Corner",
+    "subtitle": "Your sanctuary for holistic wellness",
+    "description": "Nestled in the heart of the Slovenian Alps, Healthy Corner offers a unique blend of traditional wellness practices and modern therapeutic techniques. Our retreat combines the healing power of nature with expert guidance to help you achieve optimal health and vitality.",
+    "stats": {
+      "guests": "100+ Happy Guests",
+      "classes": "50+ Weekly Classes",
+      "experience": "5+ Years Experience"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "yoga": {
+      "title": "Yoga Classes",
+      "description": "Daily yoga sessions combining Hatha, Vinyasa, and restorative practices"
+    },
+    "iceBath": {
+      "title": "Ice Baths",
+      "description": "Cold therapy treatments to boost circulation and reduce inflammation"
+    },
+    "retreats": {
+      "title": "Wellness Retreats",
+      "description": "Multi-day retreats focused on complete mind-body transformation"
+    },
+    "food": {
+      "title": "Healthy Food",
+      "description": "Organic, locally-sourced meals prepared with love and nutrition in mind"
+    }
+  },
+  "menu": {
+    "title": "Our Menu",
+    "subtitle": "Nourishing & Delicious",
+    "description": "Every dish is crafted with organic, locally-sourced ingredients to fuel your wellness journey"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "description": "Explore our beautiful facilities and wellness activities"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Have questions? We'd love to hear from you",
+    "description": "Send us a message and we'll respond as soon as possible",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully! We'll get back to you soon."
+    },
+    "info": {
+      "title": "Contact Information",
+      "description": "Reach out to us through any of these channels",
+      "location": "Location",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Hours"
+    }
+  },
+  "booking": {
+    "title": "Book Your Experience",
+    "subtitle": "Reserve your spot for wellness activities",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "service": "Select Service",
+      "date": "Preferred Date",
+      "time": "Preferred Time",
+      "guests": "Number of Guests",
+      "message": "Special Requests",
+      "submit": "Book Now"
+    }
+  }
+}

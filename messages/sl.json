@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "home": "Domov",
+    "about": "O nas",
+    "services": "Storitve",
+    "menu": "Meni",
+    "schedule": "Urnik",
+    "gallery": "Galerija",
+    "contact": "Kontakt",
+    "bookNow": "Rezerviraj"
+  },
+  "hero": {
+    "title": "Izkušnja wellnessa v slovenskih Alpah",
+    "subtitle": "Spremenite svoje zdravje skozi naravo, jogo in hladno terapijo",
+    "cta": "Začnite svojo potovanje"
+  },
+  "about": {
+    "title": "O Healthy Corner",
+    "subtitle": "Vaš zavetišče za holistično wellness",
+    "description": "Vgnezdeno v srcu slovenskih Alp, Healthy Corner ponuja edinstveno kombinacijo tradicionalnih wellness praks in sodobnih terapevtskih tehnik. Naš retreat združuje zdravilno moč narave z strokovnim vodstvom, da vam pomaga doseči optimalno zdravje in vitalnost.",
+    "stats": {
+      "guests": "100+ Zadovoljnih gostov",
+      "classes": "50+ Tedenskih razredov",
+      "experience": "5+ Let izkušenj"
+    }
+  },
+  "services": {
+    "title": "Naše storitve",
+    "yoga": {
+      "title": "Joga razredi",
+      "description": "Dnevne jogijske seje, ki združujejo Hatha, Vinyasa in restorative prakse"
+    },
+    "iceBath": {
+      "title": "Ledene kopeli",
+      "description": "Hladne terapije za izboljšanje cirkulacije in zmanjšanje vnetja"
+    },
+    "retreats": {
+      "title": "Wellness retreati",
+      "description": "Večdnevni retreati osredotočeni na popolno transformacijo uma in telesa"
+    },
+    "food": {
+      "title": "Zdrava hrana",
+      "description": "Organska, lokalno pridelana hrana, pripravljena z ljubeznijo in pozornostjo na prehrano"
+    }
+  },
+  "menu": {
+    "title": "Naš meni",
+    "subtitle": "Hranljivo & Okusno",
+    "description": "Vsaka jed je pripravljena z organskimi, lokalno pridelanimi sestavinami, da napolni vašo wellness pot"
+  },
+  "gallery": {
+    "title": "Galerija",
+    "description": "Raziščite naše lepe objekte in wellness dejavnosti"
+  },
+  "contact": {
+    "title": "Stopite v stik",
+    "subtitle": "Imate vprašanja? Radi bi slišali od vas",
+    "description": "Pošljite nam sporočilo in odgovorili bomo čim prej",
+    "form": {
+      "name": "Vaše ime",
+      "email": "E-poštni naslov",
+      "subject": "Zadeva",
+      "message": "Sporočilo",
+      "submit": "Pošlji sporočilo",
+      "sending": "Pošiljanje...",
+      "success": "Sporočilo uspešno poslano! Kmalu se vam bomo oglasili."
+    },
+    "info": {
+      "title": "Kontaktne informacije",
+      "description": "Stopite v stik z nami prek katerega koli od teh kanalov",
+      "location": "Lokacija",
+      "phone": "Telefon",
+      "email": "E-pošta",
+      "hours": "Urnik"
+    }
+  },
+  "booking": {
+    "title": "Rezervirajte svojo izkušnjo",
+    "subtitle": "Rezervirajte svoje mesto za wellness dejavnosti",
+    "form": {
+      "name": "Polno ime",
+      "email": "E-poštni naslov",
+      "phone": "Telefonska številka",
+      "service": "Izberite storitev",
+      "date": "Želeni datum",
+      "time": "Želeni čas",
+      "guests": "Število gostov",
+      "message": "Posebne zahteve",
+      "submit": "Rezerviraj zdaj"
+    }
+  }
+}
