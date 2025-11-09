@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Calendar, Mail, Phone, User, Clock, Users, LogOut, MessageSquare, Trash2, Save, CheckCircle, XCircle, PlusCircle, X } from 'lucide-react';
 import Image from 'next/image';
@@ -345,6 +345,7 @@ interface ContactMessage {
 export default function AdminDashboard() {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
@@ -412,6 +413,14 @@ export default function AdminDashboard() {
       }
     };
   }, []);
+
+  // Listen for query param changes (?tab=...)
+  useEffect(() => {
+    const t = (searchParams?.get('tab') || '').toLowerCase();
+    if (t === 'bookings' || t === 'messages' || t === 'products' || t === 'orders' || t === 'services') {
+      setActiveTab(t as any);
+    }
+  }, [searchParams]);
 
   // Derived, sorted & paginated arrays
   const sortedBookings = useMemo(() => {

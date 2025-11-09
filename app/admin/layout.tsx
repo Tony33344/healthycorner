@@ -9,14 +9,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Operations */}
             <div className="flex items-center gap-2 mr-4">
               <span className="text-neutral-500">Operations:</span>
-              <Link href="/admin#bookings" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Bookings</Link>
-              <Link href="/admin#orders" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Orders</Link>
+              <Link href="/admin?tab=bookings" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Bookings</Link>
+              <Link href="/admin?tab=orders" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Orders</Link>
             </div>
             {/* Catalog */}
             <div className="flex items-center gap-2 mr-4">
               <span className="text-neutral-500">Catalog:</span>
-              <Link href="/admin#products" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Products</Link>
-              <Link href="/admin#services" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Services</Link>
+              <Link href="/admin?tab=products" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Products</Link>
+              <Link href="/admin?tab=services" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Services</Link>
             </div>
             {/* Content */}
             <div className="flex items-center gap-2 mr-4">
@@ -27,12 +27,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Communication */}
             <div className="flex items-center gap-2">
               <span className="text-neutral-500">Communication:</span>
-              <Link href="/admin#messages" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Messages</Link>
+              <Link href="/admin?tab=messages" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Messages</Link>
             </div>
           </div>
         </div>
       </nav>
-      {children}
+      <main className="pt-16">
+        {children}
+      </main>
     </div>
   );
 }
