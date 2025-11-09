@@ -286,23 +286,6 @@ export default function ContentManager() {
               <h1 className="text-2xl font-bold text-neutral-900">Content Manager</h1>
               <p className="text-sm text-neutral-600">Edit website content and images</p>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center gap-2 mr-2">
-                <button onClick={() => router.push('/admin#bookings')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Bookings</button>
-                <button onClick={() => router.push('/admin#messages')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Messages</button>
-                <button onClick={() => router.push('/admin#products')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Products</button>
-                <button onClick={() => router.push('/admin#services')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Services</button>
-                <button onClick={() => router.push('/admin#orders')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Orders</button>
-                <button onClick={() => router.push('/admin/media')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Media</button>
-                <button disabled className="px-3 py-2 rounded-lg bg-primary text-white text-sm">Content</button>
-              </div>
-              <button
-                onClick={() => router.push('/admin')}
-                className="px-4 py-2 text-neutral-700 hover:text-neutral-900"
-              >
-                Back to Dashboard
-              </button>
-            </div>
           </div>
         </div>
       </header>
@@ -349,6 +332,7 @@ export default function ContentManager() {
                 <span className="text-primary">3.</span> Brand Section
               </h2>
               {renderField('brand', 'heading', 'Section Heading', 'text')}
+              {renderField('brand', 'tagline', 'Tagline', 'text')}
               {renderField('brand', 'description', 'Section Description', 'textarea')}
             </div>
 

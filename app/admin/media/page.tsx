@@ -233,21 +233,6 @@ export default function MediaManager() {
               <p className="text-sm text-neutral-600">Manage gallery images and media</p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="flex items-center gap-2 mr-2">
-                <button onClick={() => router.push('/admin#bookings')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Bookings</button>
-                <button onClick={() => router.push('/admin#messages')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Messages</button>
-                <button onClick={() => router.push('/admin#products')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Products</button>
-                <button onClick={() => router.push('/admin#services')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Services</button>
-                <button onClick={() => router.push('/admin#orders')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Orders</button>
-                <button disabled className="px-3 py-2 rounded-lg bg-primary text-white text-sm">Media</button>
-                <button onClick={() => router.push('/admin/content')} className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-sm">Content</button>
-              </div>
-              <button
-                onClick={() => router.push('/admin')}
-                className="px-4 py-2 text-neutral-700 hover:text-neutral-900"
-              >
-                Back to Dashboard
-              </button>
               <button
                 onClick={() => setShowUploadModal(true)}
                 className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"

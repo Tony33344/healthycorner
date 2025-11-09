@@ -18,6 +18,10 @@ export function Shop() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState({
+    heading: 'Wellness Products & Retreats',
+    description: 'Book your wellness experience or purchase our curated products',
+  });
 
   useEffect(() => {
     fetchProducts();
@@ -45,6 +49,22 @@ export function Shop() {
         console.error("Failed to load cart:", e);
       }
     }
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/content?section=shop', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const shopData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') shopData.heading = item.value;
+            if (item.key === 'description') shopData.description = item.value;
+          });
+          setContent(prev => ({ ...prev, ...shopData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch shop content:', err));
   }, []);
 
   const fetchProducts = async () => {
@@ -128,10 +148,10 @@ export function Shop() {
             <div className="w-16 h-1 bg-primary mt-3 mx-auto"></div>
           </div>
           <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-            Wellness Products & Retreats
+            {content.heading}
           </h2>
           <p className="text-xl text-neutral-700 font-light">
-            Book your wellness experience or purchase our curated products
+            {content.description}
           </p>
         </motion.div>
 

@@ -8,6 +8,7 @@ export function BrandSection() {
   const [content, setContent] = useState({
     heading: "healthy corner",
     description: "Experience the perfect blend of nature, wellness, and transformation in the heart of the Slovenian Alps.",
+    tagline: "ALPSKI ZDRAVILIŠKI KAMP",
   });
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export function BrandSection() {
           data.content.forEach((item: any) => {
             if (item.key === 'heading') brandData.heading = item.value;
             if (item.key === 'description') brandData.description = item.value;
+            if (item.key === 'tagline') brandData.tagline = item.value;
           });
           setContent(prev => ({ ...prev, ...brandData }));
         }
@@ -50,7 +52,7 @@ export function BrandSection() {
           </h2>
           
           <p className="text-sm md:text-base text-black/80 mb-12 uppercase tracking-[0.4em] font-light">
-            ALPSKI ZDRAVILIŠKI KAMP
+            {content.tagline}
           </p>
 
           <div className="max-w-3xl mx-auto">
