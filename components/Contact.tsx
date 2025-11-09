@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
 interface ContactFormData {
@@ -16,6 +16,30 @@ interface ContactFormData {
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [content, setContent] = useState({
+    heading: "Get In Touch",
+    address: "Camp Menina, Mozirje, Slovenia",
+    phone: "+386 XX XXX XXX",
+    email: "info@healthycorner.si",
+  });
+
+  useEffect(() => {
+    fetch('/api/content?section=contact', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const contactData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') contactData.heading = item.value;
+            if (item.key === 'address') contactData.address = item.value;
+            if (item.key === 'phone') contactData.phone = item.value;
+            if (item.key === 'email') contactData.email = item.value;
+          });
+          setContent(prev => ({ ...prev, ...contactData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch contact content:', err));
+  }, []);
   
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
 
@@ -64,7 +88,7 @@ export function Contact() {
             <div className="w-16 h-1 bg-primary mt-3 mx-auto"></div>
           </div>
           <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-            Get In Touch
+            {content.heading}
           </h2>
           <p className="text-xl text-neutral-700 font-light">
             Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
@@ -97,8 +121,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-semibold text-neutral-900 mb-1">Location</h4>
                   <p className="text-neutral-600 text-sm">
-                    Camp Menina<br />
-                    Mozirje, Slovenia
+                    {content.address}
                   </p>
                 </div>
               </div>
@@ -110,7 +133,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-semibold text-neutral-900 mb-1">Phone</h4>
                   <p className="text-neutral-600 text-sm">
-                    +386 XX XXX XXX
+                    {content.phone}
                   </p>
                 </div>
               </div>
@@ -122,7 +145,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-semibold text-neutral-900 mb-1">Email</h4>
                   <p className="text-neutral-600 text-sm">
-                    info@healthycorner.si
+                    {content.email}
                   </p>
                 </div>
               </div>
