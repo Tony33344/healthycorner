@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const serviceRole = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!supabaseUrl || !serviceRole) {
-      return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
+      return NextResponse.json({ error: 'Supabase not configured' }, { status: 500, headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0' } });
     }
 
     const supabase = createClient(supabaseUrl, serviceRole);
@@ -20,12 +23,18 @@ export async function GET() {
 
     if (error) {
       console.error('Products select error', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0' } });
     }
 
-    return NextResponse.json({ products: data ?? [] }, { status: 200 });
+    return NextResponse.json(
+      { products: data ?? [] },
+      { status: 200, headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0' } }
+    );
   } catch (e: any) {
     console.error('Products API error', e);
-    return NextResponse.json({ error: e?.message ?? 'Unknown error' }, { status: 500 });
+    return NextResponse.json(
+      { error: e?.message ?? 'Unknown error' },
+      { status: 500, headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0' } }
+    );
   }
 }
