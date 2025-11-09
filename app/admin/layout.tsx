@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -33,7 +34,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </nav>
       <main className="pt-16">
-        {children}
+        <Suspense fallback={<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-neutral-600">Loading...</div>}>
+          {children}
+        </Suspense>
       </main>
     </div>
   );
