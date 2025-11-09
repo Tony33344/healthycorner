@@ -35,6 +35,10 @@ export function Booking() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState('');
+  const [content, setContent] = useState({
+    heading: "Start Your Wellness Journey",
+    description: "Book your transformative experience at Healthy Corner. Choose your preferred service and date.",
+  });
   
   const { register, handleSubmit, formState: { errors }, reset } = useForm<BookingFormData>();
   const [services, setServices] = useState<string[]>(DEFAULT_SERVICES);
@@ -51,6 +55,22 @@ export function Booking() {
       } catch {}
     })();
     return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/content?section=booking', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const bookingData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') bookingData.heading = item.value;
+            if (item.key === 'description') bookingData.description = item.value;
+          });
+          setContent(prev => ({ ...prev, ...bookingData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch booking content:', err));
   }, []);
 
   const onSubmit = async (data: BookingFormData) => {
@@ -109,11 +129,11 @@ export function Booking() {
             </div>
             
             <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-              Start Your Wellness Journey
+              {content.heading}
             </h2>
             
-            <p className="text-xl text-neutral-700 mb-10 leading-relaxed font-light">
-              Reserve your spot for our classes, workshops, or multi-day retreats. Our team will confirm your booking within 24 hours.
+            <p className="text-xl text-neutral-700 font-light">
+              {content.description}
             </p>
 
             <div className="space-y-6">

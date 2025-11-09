@@ -51,6 +51,10 @@ const DEFAULT_SERVICES = [
 
 export function Services() {
   const [items, setItems] = useState<Array<{ name: string; description?: string }>>([]);
+  const [content, setContent] = useState({
+    heading: "Comprehensive Wellness Programs",
+    description: "Discover our range of services designed to support your journey to optimal health and vitality",
+  });
 
   useEffect(() => {
     let active = true;
@@ -64,6 +68,22 @@ export function Services() {
       } catch {}
     })();
     return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/content?section=services', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const servicesData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') servicesData.heading = item.value;
+            if (item.key === 'description') servicesData.description = item.value;
+          });
+          setContent(prev => ({ ...prev, ...servicesData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch services content:', err));
   }, []);
 
   // map dynamic items onto a styled card set; fallback to defaults when empty
@@ -103,10 +123,10 @@ export function Services() {
             <div className="w-16 h-1 bg-primary mt-3 mx-auto"></div>
           </div>
           <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-            Comprehensive Wellness Programs
+            {content.heading}
           </h2>
           <p className="text-xl text-neutral-700 font-light">
-            Discover our range of services designed to support your journey to optimal health and vitality
+            {content.description}
           </p>
         </motion.div>
 
