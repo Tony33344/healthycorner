@@ -4,8 +4,40 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+interface HeroContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  background_image: string | null;
+}
 
 export function Hero() {
+  const [content, setContent] = useState<HeroContent>({
+    title: "healthy corner",
+    subtitle: "ALPSKI ZDRAVILIŠKI KAMP",
+    description: "Discover wellness through healthy nutrition, yoga, Wim Hof breathing, and ice baths in the heart of the Alps",
+    background_image: null,
+  });
+
+  useEffect(() => {
+    fetch('/api/content?section=hero', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const heroData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'title') heroData.title = item.value;
+            if (item.key === 'subtitle') heroData.subtitle = item.value;
+            if (item.key === 'description') heroData.description = item.value;
+            if (item.key === 'background_image') heroData.background_image = item.image_url;
+          });
+          setContent(prev => ({ ...prev, ...heroData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch hero content:', err));
+  }, []);
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Image with Overlay */}
@@ -54,7 +86,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-6xl md:text-8xl font-bold text-white mb-3 lowercase tracking-tight"
           >
-            healthy corner
+            {content.title}
           </motion.h1>
 
           <motion.p
@@ -63,7 +95,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-sm md:text-base text-white/80 mb-8 uppercase tracking-[0.4em] font-light"
           >
-            ALPSKI ZDRAVILIŠKI KAMP
+            {content.subtitle}
           </motion.p>
 
           <motion.p
@@ -72,7 +104,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto"
           >
-            Discover wellness through healthy nutrition, yoga, Wim Hof breathing, and ice baths in the heart of the Alps
+            {content.description}
           </motion.p>
 
           <motion.div

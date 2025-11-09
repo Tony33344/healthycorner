@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Heart, Leaf, Mountain, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const features = [
   {
@@ -27,6 +28,29 @@ const features = [
 ];
 
 export function About() {
+  const [content, setContent] = useState({
+    heading: "Your Journey to Wellness Begins Here",
+    intro1: "Nestled in the breathtaking Camp Menina, Healthy Corner is more than just a wellness retreat—it's a transformative experience that reconnects you with your body, mind, and nature.",
+    intro2: "We combine ancient wisdom with modern wellness practices, offering a unique blend of nutritious cuisine, yoga, the powerful Wim Hof method, and invigorating ice baths. Our mission is to help you discover your optimal health and vitality in the pure Alpine air.",
+  });
+
+  useEffect(() => {
+    fetch('/api/content?section=about', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const aboutData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') aboutData.heading = item.value;
+            if (item.key === 'intro1') aboutData.intro1 = item.value;
+            if (item.key === 'intro2') aboutData.intro2 = item.value;
+          });
+          setContent(prev => ({ ...prev, ...aboutData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch about content:', err));
+  }, []);
+
   return (
     <section id="about" className="py-24 md:py-40 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,15 +70,15 @@ export function About() {
             </div>
             
             <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-              Your Journey to Wellness Begins Here
+              {content.heading}
             </h2>
             
             <p className="text-xl text-neutral-700 mb-6 leading-relaxed font-light">
-              Nestled in the breathtaking Camp Menina, Healthy Corner is more than just a wellness retreat—it's a transformative experience that reconnects you with your body, mind, and nature.
+              {content.intro1}
             </p>
             
             <p className="text-xl text-neutral-700 mb-10 leading-relaxed font-light">
-              We combine ancient wisdom with modern wellness practices, offering a unique blend of nutritious cuisine, yoga, the powerful Wim Hof method, and invigorating ice baths. Our mission is to help you discover your optimal health and vitality in the pure Alpine air.
+              {content.intro2}
             </p>
 
             <div className="flex flex-wrap gap-4">

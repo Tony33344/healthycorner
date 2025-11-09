@@ -2,8 +2,29 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export function BrandSection() {
+  const [content, setContent] = useState({
+    heading: "healthy corner",
+    description: "Experience the perfect blend of nature, wellness, and transformation in the heart of the Slovenian Alps.",
+  });
+
+  useEffect(() => {
+    fetch('/api/content?section=brand', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const brandData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') brandData.heading = item.value;
+            if (item.key === 'description') brandData.description = item.value;
+          });
+          setContent(prev => ({ ...prev, ...brandData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch brand content:', err));
+  }, []);
   return (
     <section className="py-24 md:py-32 bg-primary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,7 +46,7 @@ export function BrandSection() {
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold text-black mb-6 lowercase">
-            healthy corner
+            {content.heading}
           </h2>
           
           <p className="text-sm md:text-base text-black/80 mb-12 uppercase tracking-[0.4em] font-light">
@@ -34,7 +55,7 @@ export function BrandSection() {
 
           <div className="max-w-3xl mx-auto">
             <p className="text-2xl md:text-3xl text-black font-light leading-relaxed mb-8">
-              Experience the perfect blend of nature, wellness, and transformation in the heart of the Slovenian Alps.
+              {content.description}
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mt-16">
