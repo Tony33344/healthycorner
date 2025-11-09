@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, CheckCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -10,6 +10,28 @@ export function Newsletter() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [content, setContent] = useState({
+    heading: "Stay Connected",
+    description: "Subscribe to our newsletter for wellness tips, retreat updates, and exclusive offers.",
+    button_text: "Subscribe",
+  });
+
+  useEffect(() => {
+    fetch('/api/content?section=newsletter', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          const newsletterData: any = {};
+          data.content.forEach((item: any) => {
+            if (item.key === 'heading') newsletterData.heading = item.value;
+            if (item.key === 'description') newsletterData.description = item.value;
+            if (item.key === 'button_text') newsletterData.button_text = item.value;
+          });
+          setContent(prev => ({ ...prev, ...newsletterData }));
+        }
+      })
+      .catch(err => console.error('Failed to fetch newsletter content:', err));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,11 +80,11 @@ export function Newsletter() {
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-            Stay Connected
+            {content.heading}
           </h2>
           
           <p className="text-lg text-neutral-600 mb-8">
-            Subscribe to our newsletter for wellness tips, retreat updates, and exclusive offers.
+            {content.description}
           </p>
 
           {success ? (
@@ -96,7 +118,7 @@ export function Newsletter() {
                     "Subscribing..."
                   ) : (
                     <>
-                      Subscribe
+                      {content.button_text}
                       <Send size={18} />
                     </>
                   )}
