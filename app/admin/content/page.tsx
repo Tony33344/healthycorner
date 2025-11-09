@@ -360,6 +360,7 @@ export default function ContentManager() {
               <h2 className="text-xl font-bold text-neutral-900 mb-6 pb-3 border-b flex items-center gap-2">
                 <span className="text-primary">6.</span> Schedule Section
               </h2>
+              {renderField('schedule', 'label', 'Label (small uppercase above heading)', 'text')}
               {renderField('schedule', 'heading', 'Section Heading', 'text')}
               {renderField('schedule', 'description', 'Section Description', 'textarea')}
             </div>

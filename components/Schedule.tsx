@@ -3,71 +3,50 @@
 import { motion } from "framer-motion";
 import { Clock, Users, MapPin } from "lucide-react";
 
-const schedule = [
-  {
-    day: "Monday",
-    classes: [
-      { time: "07:00", name: "Morning Yoga Flow", instructor: "Ana", duration: "60 min", spots: 12 },
-      { time: "09:00", name: "Wim Hof Breathing", instructor: "Marko", duration: "45 min", spots: 15 },
-      { time: "11:00", name: "Ice Bath Session", instructor: "Marko", duration: "30 min", spots: 8 },
-      { time: "17:00", name: "Sunset Yoga", instructor: "Ana", duration: "60 min", spots: 12 },
-    ],
-  },
-  {
-    day: "Tuesday",
-    classes: [
-      { time: "07:00", name: "Meditation & Breathwork", instructor: "Ana", duration: "45 min", spots: 15 },
-      { time: "09:30", name: "Power Yoga", instructor: "Luka", duration: "75 min", spots: 10 },
-      { time: "14:00", name: "Nutrition Workshop", instructor: "Nina", duration: "90 min", spots: 20 },
-      { time: "17:00", name: "Yin Yoga", instructor: "Ana", duration: "60 min", spots: 12 },
-    ],
-  },
-  {
-    day: "Wednesday",
-    classes: [
-      { time: "07:00", name: "Morning Yoga Flow", instructor: "Ana", duration: "60 min", spots: 12 },
-      { time: "09:00", name: "Wim Hof Method", instructor: "Marko", duration: "90 min", spots: 12 },
-      { time: "11:00", name: "Ice Bath Session", instructor: "Marko", duration: "30 min", spots: 8 },
-      { time: "16:00", name: "Restorative Yoga", instructor: "Ana", duration: "75 min", spots: 12 },
-    ],
-  },
-  {
-    day: "Thursday",
-    classes: [
-      { time: "07:00", name: "Vinyasa Flow", instructor: "Luka", duration: "60 min", spots: 12 },
-      { time: "09:00", name: "Cold Exposure Training", instructor: "Marko", duration: "60 min", spots: 10 },
-      { time: "14:00", name: "Cooking Class", instructor: "Nina", duration: "120 min", spots: 15 },
-      { time: "17:00", name: "Evening Meditation", instructor: "Ana", duration: "45 min", spots: 15 },
-    ],
-  },
-  {
-    day: "Friday",
-    classes: [
-      { time: "07:00", name: "Morning Yoga Flow", instructor: "Ana", duration: "60 min", spots: 12 },
-      { time: "09:00", name: "Wim Hof Breathing", instructor: "Marko", duration: "45 min", spots: 15 },
-      { time: "11:00", name: "Ice Bath Session", instructor: "Marko", duration: "30 min", spots: 8 },
-      { time: "17:00", name: "Sunset Yoga", instructor: "Ana", duration: "60 min", spots: 12 },
-    ],
-  },
-  {
-    day: "Saturday",
-    classes: [
-      { time: "08:00", name: "Weekend Warrior Yoga", instructor: "Luka", duration: "90 min", spots: 15 },
-      { time: "10:30", name: "Wim Hof Workshop", instructor: "Marko", duration: "120 min", spots: 12 },
-      { time: "15:00", name: "Nature Walk & Meditation", instructor: "Ana", duration: "90 min", spots: 20 },
-    ],
-  },
-  {
-    day: "Sunday",
-    classes: [
-      { time: "08:00", name: "Gentle Morning Yoga", instructor: "Ana", duration: "60 min", spots: 15 },
-      { time: "10:00", name: "Wellness Brunch & Talk", instructor: "Nina", duration: "120 min", spots: 25 },
-      { time: "16:00", name: "Restorative Yoga", instructor: "Ana", duration: "75 min", spots: 12 },
-    ],
-  },
-];
+type ClassItem = { time: string; name: string; instructor?: string; duration?: string; spots?: number };
+type DayItem = { day: string; classes: ClassItem[] };
+type ScheduleJSON = { days: DayItem[] };
+
+const DEFAULT_SCHEDULE: ScheduleJSON = {
+  days: [
+    { day: "Monday", classes: [] },
+    { day: "Tuesday", classes: [] },
+    { day: "Wednesday", classes: [] },
+    { day: "Thursday", classes: [] },
+    { day: "Friday", classes: [] },
+    { day: "Saturday", classes: [] },
+    { day: "Sunday", classes: [] },
+  ],
+};
+
+import { useEffect, useState } from "react";
 
 export function Schedule() {
+  const [label, setLabel] = useState("WEEKLY SCHEDULE");
+  const [heading, setHeading] = useState("Classes & Activities");
+  const [description, setDescription] = useState("Join our daily classes and workshops designed to support your wellness journey");
+  const [data, setData] = useState<ScheduleJSON>(DEFAULT_SCHEDULE);
+
+  useEffect(() => {
+    fetch('/api/content?section=schedule', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(payload => {
+        const items = payload?.content || [];
+        const byKey: Record<string, any> = {};
+        items.forEach((it: any) => { byKey[it.key] = it; });
+        if (byKey['label']?.value) setLabel(byKey['label'].value);
+        if (byKey['heading']?.value) setHeading(byKey['heading'].value);
+        if (byKey['description']?.value) setDescription(byKey['description'].value);
+        const classesJson = byKey['classes']?.json;
+        if (classesJson && Array.isArray(classesJson.days)) {
+          // Ensure 7 days order using default map
+          const map = new Map<string, DayItem>(classesJson.days.map((d: DayItem) => [d.day, d]));
+          const merged: ScheduleJSON = { days: DEFAULT_SCHEDULE.days.map(d => map.get(d.day) || d) };
+          setData(merged);
+        }
+      })
+      .catch(() => {});
+  }, []);
   return (
     <section id="schedule" className="py-24 md:py-40 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,21 +60,21 @@ export function Schedule() {
         >
           <div className="mb-8">
             <span className="text-primary font-bold text-sm uppercase tracking-[0.3em]">
-              WEEKLY SCHEDULE
+              {label}
             </span>
             <div className="w-16 h-1 bg-primary mt-3 mx-auto"></div>
           </div>
           <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
-            Classes & Activities
+            {heading}
           </h2>
           <p className="text-xl text-neutral-700 font-light">
-            Join our daily classes and workshops designed to support your wellness journey
+            {description}
           </p>
         </motion.div>
 
         {/* Schedule Grid */}
         <div className="space-y-8">
-          {schedule.map((day, dayIndex) => (
+          {data.days.map((day, dayIndex) => (
             <motion.div
               key={day.day}
               initial={{ opacity: 0, y: 30 }}
@@ -126,20 +105,20 @@ export function Schedule() {
                           {classItem.time}
                         </div>
                         <span className="text-neutral-400">•</span>
-                        <span className="text-neutral-600 text-sm">{classItem.duration}</span>
+                        <span className="text-neutral-600 text-sm">{classItem.duration || ''}</span>
                       </div>
                       <h4 className="text-lg font-semibold text-neutral-900 mb-1">
                         {classItem.name}
                       </h4>
                       <p className="text-sm text-neutral-600">
-                        with {classItem.instructor}
+                        {classItem.instructor ? `with ${classItem.instructor}` : ''}
                       </p>
                     </div>
 
                     <div className="flex items-center space-x-4 mt-4 md:mt-0">
                       <div className="flex items-center text-neutral-600 text-sm">
                         <Users size={16} className="mr-2" />
-                        {classItem.spots} spots
+                        {classItem.spots ? `${classItem.spots} spots` : ' '}
                       </div>
                       <a 
                         href="#booking"

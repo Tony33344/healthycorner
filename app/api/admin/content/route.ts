@@ -52,13 +52,14 @@ export async function PATCH(req: Request) {
   try {
     const supabase = getClient();
     const body = await req.json();
-    const { id, value, image_url, published } = body || {};
+    const { id, value, image_url, published, json } = body || {};
     if (!id) return NextResponse.json({ error: 'id is required' }, { status: 400 });
     
     const updates: any = {};
     if (value !== undefined) updates.value = value;
     if (image_url !== undefined) updates.image_url = image_url;
     if (published !== undefined) updates.published = published;
+    if (json !== undefined) updates.json = json;
     
     const { data, error } = await supabase
       .from('site_content')

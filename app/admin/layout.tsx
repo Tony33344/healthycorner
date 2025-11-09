@@ -24,6 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span className="text-neutral-500">Content:</span>
               <Link href="/admin/content" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Content Manager</Link>
               <Link href="/admin/media" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Media Manager</Link>
+              <Link href="/admin/schedule" className="px-3 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Schedule Manager</Link>
             </div>
             {/* Communication */}
             <div className="flex items-center gap-2">
