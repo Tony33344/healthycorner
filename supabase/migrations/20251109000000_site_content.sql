@@ -2,7 +2,7 @@
 -- TABLE: SITE_CONTENT (Generic CMS key/value)
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.site_content (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   section TEXT NOT NULL,
   key TEXT NOT NULL,
   value TEXT,
@@ -44,6 +44,6 @@ EXECUTE FUNCTION update_updated_at_column();
 -- Seed defaults for About section
 INSERT INTO public.site_content (section, key, value) VALUES
   ('about', 'heading', 'Your Journey to Wellness Begins Here'),
-  ('about', 'intro1', 'Nestled in the breathtaking Camp Menina, Healthy Corner is more than just a wellness retreat—it\'s a transformative experience that reconnects you with your body, mind, and nature.'),
+  ('about', 'intro1', 'Nestled in the breathtaking Camp Menina, Healthy Corner is more than just a wellness retreat—it''s a transformative experience that reconnects you with your body, mind, and nature.'),
   ('about', 'intro2', 'We combine ancient wisdom with modern wellness practices, offering a unique blend of nutritious cuisine, yoga, the powerful Wim Hof method, and invigorating ice baths. Our mission is to help you discover your optimal health and vitality in the pure Alpine air.')
 ON CONFLICT (section, key) DO NOTHING;

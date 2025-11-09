@@ -16,11 +16,11 @@ export async function GET(req: Request) {
     const supabase = getClient();
     const { searchParams } = new URL(req.url);
     const section = searchParams.get('section');
-    let query = supabase.from('site_content').select('*').order('updated_at', { ascending: false });
+    let query = supabase.from('site_content').select('*').order('section', { ascending: true }).order('key', { ascending: true });
     if (section) query = query.eq('section', section);
     const { data, error } = await query;
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    const res = NextResponse.json({ items: data ?? [] });
+    const res = NextResponse.json({ content: data ?? [] });
     res.headers.set('Cache-Control', 'no-store, max-age=0, private');
     return res;
   } catch (e: any) {
@@ -41,6 +41,34 @@ export async function POST(req: Request) {
       .single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     const res = NextResponse.json({ item: data }, { status: 201 });
+    res.headers.set('Cache-Control', 'no-store, max-age=0, private');
+    return res;
+  } catch (e: any) {
+    return NextResponse.json({ error: e?.message ?? 'Unknown error' }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const supabase = getClient();
+    const body = await req.json();
+    const { id, value, image_url, published } = body || {};
+    if (!id) return NextResponse.json({ error: 'id is required' }, { status: 400 });
+    
+    const updates: any = {};
+    if (value !== undefined) updates.value = value;
+    if (image_url !== undefined) updates.image_url = image_url;
+    if (published !== undefined) updates.published = published;
+    
+    const { data, error } = await supabase
+      .from('site_content')
+      .update(updates)
+      .eq('id', id)
+      .select('*')
+      .single();
+    
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const res = NextResponse.json({ item: data }, { status: 200 });
     res.headers.set('Cache-Control', 'no-store, max-age=0, private');
     return res;
   } catch (e: any) {

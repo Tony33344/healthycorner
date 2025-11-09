@@ -776,6 +776,12 @@ export default function AdminDashboard() {
               >
                 Media Manager
               </button>
+              <button
+                onClick={() => router.push('/admin/content')}
+                className="px-6 py-3 rounded-xl font-semibold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+              >
+                Content Manager
+              </button>
             </div>
           </div>
 
