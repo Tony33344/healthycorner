@@ -395,6 +395,24 @@ export default function AdminDashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Listen for hash changes from global admin layout links
+  useEffect(() => {
+    const handler = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash === 'bookings' || hash === 'messages' || hash === 'products' || hash === 'orders' || hash === 'services') {
+        setActiveTab(hash as any);
+      }
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', handler);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('hashchange', handler);
+      }
+    };
+  }, []);
+
   // Derived, sorted & paginated arrays
   const sortedBookings = useMemo(() => {
     const arr = [...bookings];
@@ -738,72 +756,6 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <div className="bg-white rounded-xl shadow-sm">
-          <div className="border-b border-neutral-200">
-            <div className="flex flex-wrap gap-2 mb-6">
-              <button
-                onClick={() => setActiveTab('bookings')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  activeTab === 'bookings'
-                    ? 'bg-primary text-white'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                Bookings ({bookings.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('messages')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  activeTab === 'messages'
-                    ? 'bg-primary text-white'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                Messages ({messages.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('products')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  activeTab === 'products'
-                    ? 'bg-primary text-white'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                Products
-              </button>
-              <button
-                onClick={() => setActiveTab('services')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  activeTab === 'services'
-                    ? 'bg-primary text-white'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                Services
-              </button>
-              <button
-                onClick={() => setActiveTab('orders')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-                  activeTab === 'orders'
-                    ? 'bg-primary text-white'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                Orders
-              </button>
-              <button
-                onClick={() => router.push('/admin/media')}
-                className="px-6 py-3 rounded-xl font-semibold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-              >
-                Media Manager
-              </button>
-              <button
-                onClick={() => router.push('/admin/content')}
-                className="px-6 py-3 rounded-xl font-semibold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-              >
-                Content Manager
-              </button>
-            </div>
-          </div>
 
           <div className="p-6">
             <div className="flex justify-end mb-4">
