@@ -28,6 +28,7 @@ export default function ContentManager() {
   const [loadingData, setLoadingData] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [savingAll, setSavingAll] = useState(false);
   
   // Image picker state
   const [showImagePicker, setShowImagePicker] = useState(false);
@@ -59,6 +60,25 @@ export default function ContentManager() {
       console.error('Failed to fetch content', e);
     } finally {
       setLoadingData(false);
+    }
+  };
+
+  const saveAll = async () => {
+    setSavingAll(true);
+    try {
+      await Promise.all(
+        content.map(it => fetch('/api/admin/content', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: it.id, value: it.value, image_url: it.image_url, published: it.published })
+        }))
+      );
+      notify('success', 'All content saved');
+      await fetchContent();
+    } catch (e) {
+      notify('error', 'Failed to save all content');
+    } finally {
+      setSavingAll(false);
     }
   };
 
@@ -285,6 +305,12 @@ export default function ContentManager() {
             <div>
               <h1 className="text-2xl font-bold text-neutral-900">Content Manager</h1>
               <p className="text-sm text-neutral-600">Edit website content and images</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={fetchContent} className="px-4 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200">Refresh</button>
+              <button onClick={saveAll} disabled={savingAll} className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center gap-2">
+                <Save size={18} /> {savingAll ? 'Saving...' : 'Save All'}
+              </button>
             </div>
           </div>
         </div>

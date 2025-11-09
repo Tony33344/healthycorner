@@ -27,7 +27,7 @@ const DEFAULT_SERVICES = [
   "Group Event",
 ];
 
-const timeSlots = [
+const DEFAULT_TIME_SLOTS = [
   "07:00", "09:00", "11:00", "14:00", "16:00", "17:00"
 ];
 
@@ -40,8 +40,9 @@ export function Booking() {
     description: "Book your transformative experience at Healthy Corner. Choose your preferred service and date.",
   });
   
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<BookingFormData>();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<BookingFormData>();
   const [services, setServices] = useState<string[]>(DEFAULT_SERVICES);
+  const [timeOptions, setTimeOptions] = useState<string[]>(DEFAULT_TIME_SLOTS);
 
   useEffect(() => {
     let active = true;
@@ -72,6 +73,24 @@ export function Booking() {
       })
       .catch(err => console.error('Failed to fetch booking content:', err));
   }, []);
+
+  // Prefill from schedule link query params
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    const svc = url.searchParams.get('service');
+    const t = url.searchParams.get('time');
+    const d = url.searchParams.get('date');
+    if (svc) {
+      setServices(prev => (prev.includes(svc) ? prev : [svc, ...prev]));
+      setValue('service', svc);
+    }
+    if (t) {
+      setTimeOptions(prev => (prev.includes(t) ? prev : [t, ...prev]));
+      setValue('time', t);
+    }
+    if (d) setValue('date', d);
+  }, [setValue]);
 
   const onSubmit = async (data: BookingFormData) => {
     setIsSubmitting(true);
@@ -291,7 +310,7 @@ export function Booking() {
                     className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                   >
                     <option value="">Select...</option>
-                    {timeSlots.map(time => (
+                    {timeOptions.map(time => (
                       <option key={time} value={time}>{time}</option>
                     ))}
                   </select>

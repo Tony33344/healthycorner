@@ -39,19 +39,13 @@ export function Hero() {
       .catch(err => console.error('Failed to fetch hero content:', err));
   }, []);
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Background Image with Overlay */}
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-white">
+      {/* Background Image (optional) + soft white overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black/70 z-10" />
-        {/* Pure black background with subtle accent glow */}
-        <div className="w-full h-full bg-black relative overflow-hidden">
-          {/* Subtle animated overlay pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(164,184,44,0.15),transparent_50%)]" />
-            <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/15 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-          </div>
-        </div>
+        {content.background_image ? (
+          <Image src={content.background_image} alt="Hero background" fill className="object-cover" />
+        ) : null}
+        <div className="absolute inset-0 bg-white/70" />
       </div>
 
       {/* Content */}
@@ -84,7 +78,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-6xl md:text-8xl font-bold text-white mb-3 lowercase tracking-tight"
+            className="text-6xl md:text-8xl font-bold text-neutral-900 mb-3 lowercase tracking-tight"
           >
             {content.title}
           </motion.h1>
@@ -93,7 +87,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-sm md:text-base text-white/80 mb-8 uppercase tracking-[0.4em] font-light"
+            className="text-sm md:text-base text-neutral-600 mb-8 uppercase tracking-[0.4em] font-light"
           >
             {content.subtitle}
           </motion.p>
@@ -102,7 +96,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-neutral-700 mb-12 max-w-2xl mx-auto"
           >
             {content.description}
           </motion.p>
@@ -121,7 +115,7 @@ export function Hero() {
             </Link>
             <Link
               href="#about"
-              className="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-semibold text-lg hover:bg-white/20 transition-all border-2 border-white/30"
+              className="px-8 py-4 border-2 border-neutral-300 text-neutral-700 rounded-full font-semibold text-lg hover:border-neutral-500 transition-all bg-white"
             >
               Learn More
             </Link>
@@ -140,7 +134,7 @@ export function Hero() {
           href="#about"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center text-white/80 hover:text-white transition-colors"
+          className="flex flex-col items-center text-neutral-700 hover:text-neutral-900 transition-colors"
         >
           <span className="text-sm mb-2">Scroll to explore</span>
           <ChevronDown size={24} />

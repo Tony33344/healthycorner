@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Clock, Users, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
 
-type ClassItem = { time: string; name: string; instructor?: string; duration?: string; spots?: number };
+type ClassItem = { time: string; name: string; instructor?: string; duration?: string; spots?: number; price?: number };
 type DayItem = { day: string; classes: ClassItem[] };
 type ScheduleJSON = { days: DayItem[] };
 
@@ -18,8 +19,6 @@ const DEFAULT_SCHEDULE: ScheduleJSON = {
     { day: "Sunday", classes: [] },
   ],
 };
-
-import { useEffect, useState } from "react";
 
 export function Schedule() {
   const [label, setLabel] = useState("WEEKLY SCHEDULE");
@@ -47,6 +46,17 @@ export function Schedule() {
       })
       .catch(() => {});
   }, []);
+
+  const nextDateFor = (dayName: string) => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const target = days.indexOf(dayName);
+    if (target === -1) return '';
+    const now = new Date();
+    const diff = (target - now.getDay() + 7) % 7 || 7; // next occurrence
+    const d = new Date(now);
+    d.setDate(now.getDate() + diff);
+    return d.toISOString().slice(0,10);
+  };
   return (
     <section id="schedule" className="py-24 md:py-40 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,6 +116,12 @@ export function Schedule() {
                         </div>
                         <span className="text-neutral-400">•</span>
                         <span className="text-neutral-600 text-sm">{classItem.duration || ''}</span>
+                        {typeof classItem.price === 'number' && (
+                          <>
+                            <span className="text-neutral-400">•</span>
+                            <span className="text-neutral-800 text-sm font-medium">€{classItem.price.toFixed(2)}</span>
+                          </>
+                        )}
                       </div>
                       <h4 className="text-lg font-semibold text-neutral-900 mb-1">
                         {classItem.name}
@@ -121,7 +137,8 @@ export function Schedule() {
                         {classItem.spots ? `${classItem.spots} spots` : ' '}
                       </div>
                       <a 
-                        href="#booking"
+                        href={`/?service=${encodeURIComponent(classItem.name)}&time=${encodeURIComponent(classItem.time)}&date=${encodeURIComponent(nextDateFor(day.day))}#booking`}
+                        onClick={() => { try { localStorage.setItem('prefill_service', classItem.name); localStorage.setItem('prefill_time', classItem.time); localStorage.setItem('prefill_date', nextDateFor(day.day)); } catch {} }}
                         className="px-6 py-2 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-colors opacity-0 group-hover:opacity-100"
                       >
                         Book

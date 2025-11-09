@@ -34,7 +34,7 @@ export async function GET(req: Request) {
     }
     
     const res = NextResponse.json({ content: data ?? [] });
-    res.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
+    res.headers.set('Cache-Control', 'no-store, max-age=0, private');
     return res;
   } catch (e: any) {
     return NextResponse.json({ error: e?.message ?? 'Unknown error' }, { status: 500 });
